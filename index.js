@@ -6,6 +6,7 @@ var bodyParser 		= require('body-parser');
 var flash    			= require('connect-flash');
 var Strategy 			= require('passport-local').Strategy;
 var pam	 					= require('authenticate-pam');
+var cp 						= require('child_process');
 
 // =====================================
 // CREATE SERVICE ======================
@@ -103,9 +104,16 @@ app.get('/sge', function(req, res) {
 // HOME PAGE ===========================
 // =====================================
 app.get('/sge/home', isLoggedIn, function(req, res) {
+
+	// Get list of users
+	cp.execFile('/usr/bin/qconf', ['-sul'], function(err, result){
+		console.log(result);
+	});
+
 	res.render('home.ejs', {
 		user : req.username, // get the user out of session and pass to template
-		page : 'home'
+		page : 'home',
+		users : result
 	});
 });
 
