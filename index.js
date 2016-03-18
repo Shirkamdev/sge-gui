@@ -6,23 +6,12 @@ var bodyParser 		= require('body-parser');
 var flash    			= require('connect-flash');
 var Strategy 			= require('passport-local').Strategy;
 var pam	 					= require('authenticate-pam');
-//var https					= require('https');
-//var http					= require('http');
-//var fs						= require('fs');
-
-// =====================================
-// KEY & CERT ==========================
-// =====================================
-//var options = {
-//  key: fs.readFileSync('./ssl/ctm.key'),
-//  cert: fs.readFileSync('./ssl/ctm.crt')
-//};
 
 // =====================================
 // CREATE SERVICE ======================
 // =====================================
 var app     			= express();
-var port 					= 8888;
+var port 					= 8000;
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
@@ -30,7 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.set('view engine', 'ejs');
 app.use(session({
-	secret: 'YOURSECRETGOESHERE',
+	secret: '!@#$%FooBarBazQuz%$#@!',
 	resave: true,
 	saveUninitialized: true
  } ));
@@ -133,8 +122,8 @@ function isLoggedIn(req, res, next) {
 	res.redirect('/sge');
 }
 
-// launch ======================================================================
-//http.createServer(app).listen(8080);
-//https.createServer(options, app).listen(443);
+// =====================================
+// LAUNCH APP ====================
+// =====================================
 app.listen(port);
 console.log('The magic happens on port ' + port);
