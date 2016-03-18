@@ -106,6 +106,7 @@ app.get('/sge', function(req, res) {
 app.get('/sge/home', isLoggedIn, function(req, res) {
 
 	// Get list of users
+	var result = null;
 	cp.execFile('/usr/bin/qconf', ['-sul'], function(err, result){
 		console.log(result);
 	});
