@@ -6,9 +6,23 @@ var bodyParser 		= require('body-parser');
 var flash    			= require('connect-flash');
 var Strategy 			= require('passport-local').Strategy;
 var pam	 					= require('authenticate-pam');
-var app     			= express();
-var port     			= 8080;
+//var https					= require('https');
+//var http					= require('http');
+//var fs						= require('fs');
 
+// =====================================
+// KEY & CERT ==========================
+// =====================================
+//var options = {
+//  key: fs.readFileSync('./ssl/ctm.key'),
+//  cert: fs.readFileSync('./ssl/ctm.crt')
+//};
+
+// =====================================
+// CREATE SERVICE ======================
+// =====================================
+var app     			= express();
+var port 					= 8888;
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
@@ -60,15 +74,15 @@ passport.deserializeUser(function(username, done) {
 // =====================================
 // LOGIN ===============================
 // =====================================
-app.get('/login', function(req, res) {
+app.get('/sge/login', function(req, res) {
 	// render the page and pass in any flash data if it exists
 	res.render('login.ejs', { message: req.flash('loginMessage') });
 });
 
-app.post('/login',
+app.post('/sge/login',
   passport.authenticate('pam', {
-		failureRedirect: '/login',
-		successRedirect: '/home',
+		failureRedirect: '/sge/login',
+		successRedirect: '/sge/home',
 		failureFlash: true
 	}),
   function(req, res) {
@@ -77,29 +91,29 @@ app.post('/login',
 		} else {
 			req.session.cookie.expires = false;
 		}
-    res.redirect('/');
+    res.redirect('/sge');
   }
 );
 
 // =====================================
 // LOGOUT ==============================
 // =====================================
-app.get('/logout', function(req, res) {
+app.get('/sge/logout', function(req, res) {
 	req.logout();
-	res.redirect('/');
+	res.redirect('/sge');
 });
 
 // =====================================
 // INDEX PAGE ==========================
 // =====================================
-app.get('/', function(req, res) {
+app.get('/sge', function(req, res) {
 	res.render('index.ejs'); // load the index.ejs file
 });
 
 // =====================================
 // HOME PAGE ===========================
 // =====================================
-app.get('/home', isLoggedIn, function(req, res) {
+app.get('/sge/home', isLoggedIn, function(req, res) {
 	res.render('home.ejs', {
 		user : req.username, // get the user out of session and pass to template
 		page : 'home'
@@ -116,9 +130,11 @@ function isLoggedIn(req, res, next) {
 		return next();
 
 	// if they aren't redirect them to the home page
-	res.redirect('/');
+	res.redirect('/sge');
 }
 
 // launch ======================================================================
+//http.createServer(app).listen(8080);
+//https.createServer(options, app).listen(443);
 app.listen(port);
 console.log('The magic happens on port ' + port);
