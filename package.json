@@ -1,0 +1,29 @@
+{
+  "name": "sge-gui",
+  "version": "1.0.0",
+  "description": "Simple web interface for configuring grid engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sge",
+    "grid",
+    "engine",
+    "qconf"
+  ],
+  "author": "Michael Wilson",
+  "license": "MIT",
+  "dependencies": {
+    "authenticate-pam": "^1.0.0",
+    "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "passport": "^0.3.2",
+    "passport-custom": "^1.0.5",
+    "passport-local": "^1.0.0"
+  }
+}
