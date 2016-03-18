@@ -7,12 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "sge",
-    "grid",
-    "engine",
-    "qconf"
+    "sge gui",
+    "grid engine gui",
+    "qconf gui"
   ],
   "author": "Michael Wilson",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wilsonmichaelc/sge-gui.git"
+  },
   "license": "MIT",
   "dependencies": {
     "authenticate-pam": "^1.0.0",
