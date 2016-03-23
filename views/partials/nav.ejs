@@ -1,22 +1,19 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
+  <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle Navigation</span>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-    <!-- <a class="navbar-brand" href="#">Instrument Management System</a> -->
+      <a class="navbar-brand" href="#">Grid Engine Management</a>
     </div>
-
-    <div class="collapse navbar-collapse" role="navigation">
-      <ul class="nav navbar-nav">
-        <li class="<% if(page=='home'){ %>active<% } %>"><a href="/sge/home">Home</a></li>
-      </ul>
+    <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
+        <li class="<% if(page=='home'){ %>active<% } %>"><a href="/sge/home">Dashboard</a></li>
         <li><a href="/sge/logout">Logout</a></li>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
   </div>
 </nav>

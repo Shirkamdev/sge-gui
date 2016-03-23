@@ -11,14 +11,59 @@
 <body>
 	<% include partials/nav %>
 
-	<div class="container">
-		<div class="jumbotron text-center">
-			<h4>Grid Engine Users</h4>
-			<p>
-				Show users here...
-			</p>
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <li class="active"><a href="/sge/home">Home <span class="sr-only">(current)</span></a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">Nav item</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">Nav item again</a></li>
+        </ul>
+      </div>
+
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h2 class="sub-header">Users</h2>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>User Lists</th>
+								<th>Users</th>
+							</tr>
+						</thead>
+						<tbody id="users">
+						</tbody>
+					</table>
+				</div>
+
+				<h2 class="sub-header">Queue's</h2>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Queue</th>
+								<th>Slots</th>
+								<th>Shell</th>
+								<th>User Lists</th>
+							</tr>
+						</thead>
+						<tbody id="queues">
+						</tbody>
+					</table>
+				</div>
+      </div>
+
 		</div>
 	</div>
   <% include partials/js %> <!-- load js -->
+	<script src="./js/foo.js"></script>
 </body>
+<script>
+
+</script>
 </html>
