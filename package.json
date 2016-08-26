@@ -20,6 +20,7 @@
   "dependencies": {
     "authenticate-pam": "^1.0.0",
     "body-parser": "^1.15.0",
+    "bootbox": "^4.4.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.1",
     "ejs": "^2.4.1",
@@ -27,6 +28,7 @@
     "express-session": "^1.13.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "replace": "^0.3.0"
   }
 }

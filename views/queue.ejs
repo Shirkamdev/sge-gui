@@ -1,0 +1,175 @@
+<!-- views/home.ejs -->
+<!doctype html>
+<html>
+	<head>
+		<title>Cluster Management Tool</title>
+		 <% include partials/css %> <!-- load css -->
+		<style>
+			body 		{ padding-top:80px; word-wrap:break-word; }
+		</style>
+	</head>
+	<body>
+		<% include partials/nav %>
+
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col-sm-3 col-md-2 sidebar">
+	        <ul class="nav nav-sidebar">
+	          <li><a href="/sge/home">Home <span class="sr-only">(current)</span></a></li>
+	        </ul>
+	        <ul class="nav nav-sidebar">
+	          <li><a href="/sge/users">Users</a></li>
+	        </ul>
+					<ul class="nav nav-sidebar">
+	          <li><a href="/sge/nodes">Nodes</a></li>
+	        </ul>
+					<ul class="nav nav-sidebar">
+						<li><a href="/sge/hostgroups">Host Groups</a></li>
+					</ul>
+	        <ul class="nav nav-sidebar">
+	          <li class="active"><a href="/sge/queue">Queues</a></li>
+	        </ul>
+	      </div>
+
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<div id="queue-container">
+
+					</div>
+					<div id="edit-queue-container">
+
+					</div>
+	      </div>
+
+			</div>
+		</div>
+		<!-- Modal -->
+		<div id="edit-slots-modal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Edit Slots</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+
+		<!-- Modal -->
+		<div id="edit-hostlists-modal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Edit Hostlists</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Hostlist</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody id="hostlist-rows">
+								</tbody>
+							</table>
+						</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- Modal -->
+		<div id="edit-userlists-modal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Edit Userlists</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Userlist</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody id="userlist-rows">
+								</tbody>
+							</table>
+						</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- Modal -->
+		<div id="add-queue-modal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Add Queue</h4>
+		      </div>
+		      <div class="modal-body">
+						<p>
+							Create a queue with minimal configuration by selecting one of each of the following. These attributes may be altered later.
+						</p>
+						<form action="javascript:void(0)">
+							<div class="form-group">
+						    <label for="newq-name">Queue Name</label>
+						    <input type="text" class="form-control" id="newq-name" placeholder="myQueue.q" required>
+						  </div>
+
+							<label for="newq-slots">Select a node</label>
+							<select id="newq-slots" class="form-control" required>
+							</select>
+
+							<div class="form-group">
+						    <label for="newq-cores">Cores</label>
+						    <input type="number" min="0" step="1" class="form-control" id="newq-cores" placeholder="2" required>
+						  </div>
+
+							<label for="newq-hostgroup">Select a hostgroup</label>
+							<select id="newq-hostgroup" class="form-control" required>
+							</select>
+
+							<label for="newq-userlist">Select a userlist</label>
+							<select id="newq-userlist" class="form-control" required>
+							</select>
+						</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="create-queue">Create Queue</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	  <% include partials/js %> <!-- load js -->
+		<script src="./js/queue.js"></script>
+		<script src="./js/bootbox.min.js"></script>
+	</body>
+</html>

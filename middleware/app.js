@@ -23,6 +23,5 @@ module.exports = function(app, passport){
   app.use(flash());
   app.use('/sge/favicon.ico', express.static('images/favicon.ico'));
   app.use('/sge', express.static(path.join(__dirname, '../public')));
-  console.log(path.join(__dirname, '../public'));
 
 };

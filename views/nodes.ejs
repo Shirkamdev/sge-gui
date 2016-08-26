@@ -1,0 +1,59 @@
+<!-- views/home.ejs -->
+<!doctype html>
+<html>
+	<head>
+		<title>Cluster Management Tool</title>
+		 <% include partials/css %> <!-- load css -->
+		<style>
+			body 		{ padding-top:80px; word-wrap:break-word; }
+		</style>
+	</head>
+	<body>
+		<% include partials/nav %>
+
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col-sm-3 col-md-2 sidebar">
+	        <ul class="nav nav-sidebar">
+	          <li><a href="/sge/home">Home <span class="sr-only">(current)</span></a></li>
+	        </ul>
+	        <ul class="nav nav-sidebar">
+	          <li><a href="/sge/users">Users</a></li>
+	        </ul>
+          <ul class="nav nav-sidebar">
+	          <li class="active"><a href="/sge/nodes">Nodes</a></li>
+	        </ul>
+					<ul class="nav nav-sidebar">
+						<li><a href="/sge/hostgroups">Host Groups</a></li>
+					</ul>
+					<ul class="nav nav-sidebar">
+	          <li><a href="/sge/queue">Queues</a></li>
+	        </ul>
+	      </div>
+
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+					<div id="nodes-container" class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Execution Host (node)</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="node-list">
+
+							</tbody>
+						</table>
+					</div>
+
+	      </div>
+
+			</div>
+		</div>
+	  <% include partials/js %> <!-- load js -->
+		<script src="./js/nodes.js"></script>
+		<script src="./js/bootbox.min.js"></script>
+	</body>
+</html>

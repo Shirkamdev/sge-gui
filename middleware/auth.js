@@ -16,7 +16,7 @@ module.exports = function(passport){
     function(req, username, password, done) {
       pam.authenticate(username, password, function(err) {
         if(err) {
-          done(null, false, req.flash('loginMessage', 'Oops! Wrong username or password:'+err));
+          done(null, false, req.flash('loginMessage', err));
         }else{
           done(null, username);
         }

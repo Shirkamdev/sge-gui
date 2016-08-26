@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>SGE GUI</title>
+	<title>Cluster Management Tool</title>
 	 <% include partials/css %> <!-- load css -->
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
@@ -19,49 +19,57 @@
           <li class="active"><a href="/sge/home">Home <span class="sr-only">(current)</span></a></li>
         </ul>
         <ul class="nav nav-sidebar">
-          <li><a href="">Nav item</a></li>
+					<li><a href="/sge/users">Users</a></li>
         </ul>
-        <ul class="nav nav-sidebar">
-          <li><a href="">Nav item again</a></li>
-        </ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="/sge/nodes">Nodes</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="/sge/hostgroups">Host Groups</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="/sge/queue">Queues</a></li>
+				</ul>
       </div>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">Users</h2>
+				<h2 class="sub-header">Welcome to the Cluster Management Tool</h2>
 				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>User Lists</th>
-								<th>Users</th>
-							</tr>
-						</thead>
-						<tbody id="users">
-						</tbody>
-					</table>
-				</div>
+					<b>The purpose of this tool is to assist you in managing nodes, queues, and users on your cluster.</b>
 
-				<h2 class="sub-header">Queue's</h2>
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Queue</th>
-								<th>Slots</th>
-								<th>Shell</th>
-								<th>User Lists</th>
-							</tr>
-						</thead>
-						<tbody id="queues">
-						</tbody>
-					</table>
+					<hr>
+					<br />
+
+					<h4>Add a node</h4>
+					<p>1. Ask IT to clone an existing node, change its hostname, and assign it an IP address.</p>
+					<p>2. Once the new node is online, edit the /etc/hosts file and add this new node to it. One entry per line. IP address, tab, node name.</p>
+					<p>3. Make sure the new entry is working by pinging the node name. If you get a response, you are ready to move to the next step.</p>
+					<p>4. Now its time to use THIS tool. Click 'Nodes' on the menu. Enter the node name, and click 'Add'.</p>
+					<p>5. Just one more step. In order to allow jobs to run on this node, we need to add it to at least one queue.
+						Click 'Queue`s' on the menu. Click 'Edit' next to the queue you with to add to, then click 'Edit' on the 'slots' row.
+						Choose your new node from the dropdown, enter the number of cores this queue should be able to use on this node, and click 'Add'.</p>
+					<p>6. Thats it!! Your node is ready to do some work.</p>
+
+					<hr>
+					<br />
+
+					<h4>Remove a node</h4>
+					<p>1. First you need to set the cores on this node to zero (0) for each queue so that new jobs are not sent to this node.
+						Click 'Queue`s'  on the menu. Click 'Edit' next to the queu you with to edit, then click 'Edit' on the 'slots' row.
+					  Change the cores value to zero (0) and then click 'Save'.</p>
+					<p>2. Use the 'qstat' command to confirm that no jobs are running on this node.</p>
+					<p style="text-indent: 20px;"><code>qstat -u '*' | grep nodeXX</code></p>
+					<p>3. When you are certain no jobs are running on this node, go ahead and delete it from each queue.</p>
+					<p>4. The last step is to remove the node from the list of execution hosts. Click 'Nodes' on the menu, then click 'Delete' on the appropriate node.</p>
+					<p>5. Don't forget to remove this node from your hosts file. You must edit the file as root or use a command like the one below.</p>
+					<p style="text-indent: 20px;"><code>grep -v "nodeXX" /etc/hosts > /tmp/hosts; mv /tmp/hosts /etc/hosts</code></p>
+
 				</div>
       </div>
 
 		</div>
 	</div>
   <% include partials/js %> <!-- load js -->
-	<script src="./js/foo.js"></script>
 </body>
 <script>
 
