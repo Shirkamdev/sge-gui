@@ -70,9 +70,9 @@ app.get('/sge/sgeusers', isLoggedIn, function(req, res) {
 
 // API: Add an SGE user from system
 app.put('/sge/sgeusers', isLoggedIn, function(req, res) {
-  replace({regex:'template', replacement:req.body.user, paths:['/var/www/sge-gui/templates/user'], recursive:false, silent:true});
-	cp.execFile('/usr/bin/qconf', ['-Auser', '/var/www/sge-gui/templates/user'], function(err, result){
-    replace({regex:req.body.user, replacement:'template', paths:['/var/www/sge-gui/templates/user'], recursive:false, silent:true});
+  replace({regex:'template', replacement:req.body.user, paths:['./templates/user'], recursive:false, silent:true});
+	cp.execFile('/usr/bin/qconf', ['-Auser', './templates/user'], function(err, result){
+    replace({regex:req.body.user, replacement:'template', paths:['./templates/user'], recursive:false, silent:true});
     if(!err){
 			res.json({'success':true, 'result':result});
 		}else{
@@ -185,9 +185,9 @@ app.get('/sge/node', isLoggedIn, function(req, res) {
 // API: Add execution host and add to @allhosts
 // sed -i '/node09/a10.0.0.110\tnode10' fakehosts
 app.put('/sge/node', isLoggedIn, function(req, res) {
-  replace({regex:'template', replacement:req.body.node, paths:['/var/www/sge-gui/templates/exec_host'], recursive:false, silent:true});
-	cp.execFile('/usr/bin/qconf', ['-Ae', '/var/www/sge-gui/templates/exec_host'], function(err, result){
-    replace({regex:req.body.node, replacement:'template', paths:['/var/www/sge-gui/templates/exec_host'], recursive:false, silent:true});
+  replace({regex:'template', replacement:req.body.node, paths:['./templates/exec_host'], recursive:false, silent:true});
+	cp.execFile('/usr/bin/qconf', ['-Ae', './templates/exec_host'], function(err, result){
+    replace({regex:req.body.node, replacement:'template', paths:['./templates/exec_host'], recursive:false, silent:true});
     if(!err){
 			res.json({'success':true, 'result':result});
 		}else{
@@ -221,9 +221,9 @@ app.get('/sge/hgrps', isLoggedIn, function(req, res) {
 
 // API: Add a new hostgroup
 app.put('/sge/hgrps', isLoggedIn, function(req, res) {
-  replace({regex:'@template', replacement:req.body.hostgroup, paths:['/var/www/sge-gui/templates/hostgroup'], recursive:false, silent:true});
-  cp.execFile('/usr/bin/qconf', ['-Ahgrp', '/var/www/sge-gui/templates/hostgroup'], function(err, result){
-    replace({regex:req.body.hostgroup, replacement:'@template', paths:['/var/www/sge-gui/templates/hostgroup'], recursive:false, silent:true});
+  replace({regex:'@template', replacement:req.body.hostgroup, paths:['./templates/hostgroup'], recursive:false, silent:true});
+  cp.execFile('/usr/bin/qconf', ['-Ahgrp', './templates/hostgroup'], function(err, result){
+    replace({regex:req.body.hostgroup, replacement:'@template', paths:['./templates/hostgroup'], recursive:false, silent:true});
     if(!err){
 			res.json({'success':true, 'result':result});
 		}else{
@@ -310,9 +310,9 @@ app.post('/sge/queues', isLoggedIn, function(req, res) {
 
 // API: Create a new queue
 app.put('/sge/queue', isLoggedIn, function(req, res) {
-  replace({regex:'template', replacement:req.body.queue, paths:['/var/www/sge-gui/templates/queue'], recursive:false, silent:true});
-  cp.execFile('/usr/bin/qconf', ['-Aq', '/var/www/sge-gui/templates/queue'], function(err, result){
-    replace({regex:req.body.queue, replacement:'template', paths:['/var/www/sge-gui/templates/queue'], recursive:false, silent:true});
+  replace({regex:'template', replacement:req.body.queue, paths:['./templates/queue'], recursive:false, silent:true});
+  cp.execFile('/usr/bin/qconf', ['-Aq', './templates/queue'], function(err, result){
+    replace({regex:req.body.queue, replacement:'template', paths:['./templates/queue'], recursive:false, silent:true});
     if(!err){
       cp.execFileSync('/usr/bin/qconf', ['-aattr', 'queue', 'hostlist', req.body.hostgroup, req.body.queue]);
       cp.execFileSync('/usr/bin/qconf', ['-aattr', 'queue', 'slots', req.body.slot, req.body.queue]);
