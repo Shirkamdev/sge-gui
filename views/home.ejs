@@ -1,5 +1,4 @@
-<!-- views/home.ejs -->
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Cluster Management Tool</title>
@@ -8,7 +7,7 @@
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
 </head>
-<body>
+<body ng-app="sge" ng-controller="HomeCtrl">
 	<% include partials/nav %>
 
 	<div class="container-fluid">
@@ -70,6 +69,7 @@
 		</div>
 	</div>
   <% include partials/js %> <!-- load js -->
+	<!-- <script src="js/app.js"> -->
 </body>
 <script>
 

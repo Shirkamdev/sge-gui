@@ -8,10 +8,25 @@ $(document).ready(function(){
       var data = JSON.parse(data);
       for(var i=0; i<data.length; i++){
         if(data[i] != 'shrek'){
-          $('#node-list').append('<tr><td>'+data[i]+'</td><td><button node="'+data[i]+'" class="delete-node btn btn-sm btn-danger">Delete</button></td></tr>');
+          var html = '<tr>';
+          html += '<td>'+data[i]+'</td>';
+          html += '<td><button node="'+data[i]+'" class="delete-node btn btn-sm btn-danger">Delete</button></td>';
+          html += '</tr>';
+          $('#node-list').append(html);
         }
       }
-      $('#node-list').append('<tr><td><input type="text" id="new_node_name" placeholder="Node Name"><span style="color:red">Make sure you add this node to the hosts file.</span></td><td><button class="add-node btn btn-sm btn-primary">Add</button></td></tr>');
+      var html = '<tr>';
+      html += ' <td>';
+      html += '   <div class="form-group">';
+      html += '     <input class="form-control" type="text" id="new_node_name" placeholder="Node Name" style="max-width: 130px; display: inline;">';
+      html += '   </div>';
+      html += '   <span style="color:red">Make sure you add this node to the hosts file.</span>';
+      html += ' </td>';
+      html += ' <td>';
+      html += '   <button class="add-node btn btn-sm btn-primary">Add</button>';
+      html += ' </td>';
+      html += '</tr>';
+      $('#node-list').append(html);
     }
   });
 

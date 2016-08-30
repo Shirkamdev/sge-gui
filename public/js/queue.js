@@ -159,7 +159,7 @@ $(document).ready(function(){
       var slot = slots[i].replace('[', '').replace(']', '').split('=');
       html += '<tr>';
       html += ' <td>'+slot[0]+'</td>';
-      html += ' <td><input type="number" min="0" step="1" id="'+slot[0]+'" value="'+slot[1]+'"></td>';
+      html += ' <td><div class="form-group"><input class="form-control" style="max-width: 100px;" type="number" min="0" step="1" id="'+slot[0]+'" value="'+slot[1]+'"></div></td>';
       html += ' <td>';
       html += '   <button class="btn btn-sm btn-primary update-slot" node="'+slot[0]+'" queue="'+queue+'">Save</button>&nbsp;';
       html += '   <button class="btn btn-sm btn-danger remove-slot" node="'+slot[0]+'" queue="'+queue+'">Remove</button>&nbsp;<span style="display:none;" class="slot-response"></span>';
@@ -167,13 +167,13 @@ $(document).ready(function(){
       html += '</tr>';
     }
     html += '<tr>';
-    html += ' <td><select id="new_node">';
+    html += ' <td><div class="form-group"><select id="new_node" class="form-control" style="max-width: 130px;">';
     html += '   <option></option>';
     for(var i=0; i<nodes.length; i++){
       html += ' <option value="'+nodes[i]+'">'+nodes[i]+'</option>';
     }
-    html += ' </select</td>';
-    html += ' <td><input type="number" min="0" step="1"  placeholder="4" id="new_cores"></td>';
+    html += ' </select></div></td>';
+    html += ' <td><div class="form-group"><input class="form-control" style="max-width: 100px;" type="number" min="0" step="1"  placeholder="4" id="new_cores"></div></td>';
     html += '  <td><button id="add-slot" queue="'+queue+'" class="btn btn-sm btn-success">Add</button></td>';
     html += '</tr>';
     html += '</tbody></table></div>';
@@ -328,8 +328,9 @@ $(document).ready(function(){
   // ####################################################################################################################
 
   $(document).on('click', '#edit-hostlists', function(){
+    $('#hostlist-rows').html('');
     var queue = $(this).attr('queue');
-    var available_hosts = '<tr><td><select id="new-hostgroup"><option></option>';
+    var available_hosts = '<tr><td><div class="form-group"><select style="max-width: 130px;" class="form-control" id="new-hostgroup"><option></option>';
 
     $.ajax({
       method: "get",
@@ -346,7 +347,7 @@ $(document).ready(function(){
           }
         }
 
-        available_hosts += '</select></td><td><button class="btn btn-success btn-sm" id="add-hostgroup" queue="'+queue+'">Add</button></td></tr>';
+        available_hosts += '</select></div></td><td><button class="btn btn-success btn-sm" id="add-hostgroup" queue="'+queue+'">Add</button></td></tr>';
         $('#hostlist-rows').append(available_hosts);
 
       }
@@ -378,6 +379,7 @@ $(document).ready(function(){
   });
 
   $(document).on('click', '.remove-hostgroup', function(){
+    $('select#new-hostgroup').html('');
     var queue = $(this).attr('queue');
     var hostgroup = $(this).attr('hostgroup');
     var row = $(this).parent().parent();
@@ -409,8 +411,9 @@ $(document).ready(function(){
 
 
   $(document).on('click', '#edit-userlists', function(){
+    $('#userlist-rows').html('');
     var queue = $(this).attr('queue');
-    var available_userlists = '<tr><td><select id="new-userlist"><option></option>';
+    var available_userlists = '<tr><td><div class="form-group"><select class="form-control" id="new-userlist" style="max-width: 130px;"><option></option>';
 
     $.ajax({
       method: "post",
@@ -427,7 +430,7 @@ $(document).ready(function(){
             }
           });
         });
-        available_userlists += '</select></td><td><button class="btn btn-success btn-sm" id="add-userlist" queue="'+queue+'">Add</button></td></tr>';
+        available_userlists += '</select></div></td><td><button class="btn btn-success btn-sm" id="add-userlist" queue="'+queue+'">Add</button></td></tr>';
         $('#userlist-rows').append(available_userlists);
 
       }

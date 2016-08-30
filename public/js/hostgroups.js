@@ -34,7 +34,7 @@ var initializeHostgroups = function(){
           }
         });
       }
-      $('#hostgroup-list').append('<tr><td colspan="2"><input id="new-hostgroup" type="text" placeholder="@name" required></td><td><button class="btn btn-success btn-sm" id="add-hostgroup">Add</button></td></tr>');
+      $('#hostgroup-list').append('<tr><td colspan="2"><div class="form-group"><input class="form-control" id="new-hostgroup" type="text" placeholder="@name" style="max-width: 130px;" required></div></td><td><button class="btn btn-success btn-sm" id="add-hostgroup">Add</button></td></tr>');
     }
   });
 }
@@ -62,11 +62,11 @@ var initializeNodeList = function(hostgroup){
         url: '/sge/node',
         success: function(data){
           var n = JSON.parse(data);
-          html = '<tr><td><select id="node">';
+          html = '<tr><td><div class="form-group"><select class="form-control" id="node" style="max-width: 130px;">';
           for(var i=0; i<n.length; i++){
             html += '<option value="'+n[i]+'">'+n[i]+'</option>';
           }
-          html += '</select></td><td>&nbsp;&nbsp;<button class="btn btn-success btn-sm" hostgroup="'+hostgroup+'" id="add-node">Add</button></td></tr>';
+          html += '</select></div></td><td>&nbsp;&nbsp;<button class="btn btn-success btn-sm" hostgroup="'+hostgroup+'" id="add-node">Add</button></td></tr>';
           $('#node-list').append(html);
         }
       });

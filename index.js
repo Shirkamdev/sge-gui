@@ -68,6 +68,29 @@ app.get('/sge/sgeusers', isLoggedIn, function(req, res) {
 	});
 });
 
+// API: Add an SGE user from system
+app.put('/sge/sgeusers', isLoggedIn, function(req, res) {
+  replace({regex:'template', replacement:req.body.user, paths:['/var/www/sge-gui/templates/user'], recursive:false, silent:true});
+	cp.execFile('/usr/bin/qconf', ['-Auser', '/var/www/sge-gui/templates/user'], function(err, result){
+    replace({regex:req.body.user, replacement:'template', paths:['/var/www/sge-gui/templates/user'], recursive:false, silent:true});
+    if(!err){
+			res.json({'success':true, 'result':result});
+		}else{
+			res.json({'success':false, 'error':err});
+		}
+	});
+});
+
+app.delete('/sge/sgeusers', isLoggedIn, function(req, res) {
+	cp.execFile('/usr/bin/qconf', ['-duser', req.body.user], function(err, result){
+    if(!err){
+			res.json({'success':true, 'result':result});
+		}else{
+			res.json({'success':false, 'error':err});
+		}
+	});
+});
+
 // API: Get Users by List
 app.post('/sge/sgelists', isLoggedIn, function(req, res) {
 

@@ -1,3 +1,18 @@
+var initializeUserList = function(){
+  $.ajax({
+    method: "get",
+    async: true,
+    dataType: "json",
+    url: '/sge/sgeusers',
+    success: function(data){
+      var data = JSON.parse(data);
+      data.forEach(function(user){
+        $('#new-userlist-user').append('<option value="'+user+'">'+user+'</option>');
+      });
+    }
+  });
+}
+
 var getUsersetLists = function(){
   $.ajax({
     method: "post",
@@ -5,13 +20,54 @@ var getUsersetLists = function(){
     dataType: "json",
     url: '/sge/sgelists',
     success: function(data){
-      var html = '<div class="table-responsive"><table class="table table-hover"><thead><tr><th>User Lists</th><th>Users</th><th></th></tr></thead><tbody>';
+      var html = '<div class="table-responsive">';
+      html += '  <table class="table table-hover">';
+      html += '   <thead>';
+      html += '     <tr>';
+      html += '       <th>User Lists</th>';
+      html += '       <th>Users</th>';
+      html += '       <th></th>';
+      html += '     </tr>';
+      html += '   </thead>';
+      html += '   <tbody>';
       $.each(data, function(k, v) {
         $.each(v, function(list, users){
-          html += '<tr><td>'+list+'</td><td>'+users+'</td><td><button type="button" class="btn btn-sm btn-primary" list="'+list+'" id="editUserset">Edit</button>&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-danger" list="'+list+'" id="delete-userlist">Delete</button></td></tr>';
+          html += '<tr>';
+          html += ' <td>'+list+'</td>';
+          html += ' <td>'+users+'</td>';
+          html += ' <td>';
+          html += '   <button type="button" class="btn btn-sm btn-primary" list="'+list+'" id="editUserset">Edit</button>&nbsp;&nbsp;';
+          html += '   <button type="button" class="btn btn-sm btn-danger" list="'+list+'" id="delete-userlist">Delete</button>';
+          html += ' </td>';
+          html += '</tr>';
         });
       });
-      html += '<tr><td><input id="new-userlist" type="text" placeholder="list name"><select id="new-userlist-user"><option></option></select></td><td>When creating a user list, at least one user must be added.</td><td><button class="btn btn-sm btn-success" id="add-userlist">Add</button></td></tr>';
+      html += '<tr>';
+      html += ' <td>';
+      html += '   <div class="form-group">';
+      html += '     <input class="form-control" id="new-userlist" type="text" placeholder="list name" style="max-width: 130px; display: inline;">';
+      html += '     <select class="form-control" id="new-userlist-user" style="max-width: 130px; display: inline;">';
+      html += '       <option></option>';
+      html += '     </select>';
+      html += '   </div>';
+      html += ' </td>';
+      html += ' <td style="color:#3e8f3e;">When creating a user list, at least one user must be added.</td>';
+      html += ' <td><button class="btn btn-sm btn-success" id="add-userlist">Add User List</button>';
+      html += ' </td>';
+      html += '</tr>';
+
+      html += '<tr>';
+      html += ' <td>';
+      html += '   <div class="form-group">';
+      html += '     <input id="new-sge-user" class="form-control" type="text" style="max-width: 250px;">';
+      html += '   </div>';
+      html += ' </td>';
+      html += ' <td style="color:#3e8f3e;">Add an SGE user (must be a system user)</td>';
+      html += ' <td>';
+      html += '   <button id="add-sge-user" class="btn btn-sm btn-success" style="display: inline;">Add SGE User</button>';
+      html += ' </td>';
+      html += '</tr>';
+
       html += '</tbody></table></div>';
       $('#usersets-container').append(html);
     }
@@ -57,7 +113,7 @@ var getUsersInList = function(list){
           table += '<tr><td>'+users[i]+'</td><td><button id="deleteUser" class="btn btn-sm btn-danger" list="'+list+'" user="'+users[i]+'">Delete</button></td></tr>';
         }
       }
-      table += '<tr><td><div class="form-group"><input class="form-control" type="text" name="newUser" /></div></td><td><button id="addUser" class="btn btn-sm btn-success" list="'+list+'">Add</button></td></tr>';
+      table += '<tr><td><div class="form-group"><input class="form-control" type="text" name="newUser" style="max-width: 130px; display: inline;"></div></td><td><button id="addUser" class="btn btn-sm btn-success" list="'+list+'">Add</button></td></tr>';
       table += '</tbody></table></div><div class=""><button id="edit-userset-done" class="btn btn-sm btn-primary">Done</button></div>';
       $('#userset-container').append(table);
     }
@@ -78,21 +134,6 @@ var addUser = function(list, user, row){
       }else{
         bootbox.alert('Error: '+JSON.stringify(data.error));
       }
-    }
-  });
-}
-
-var initializeUserList = function(){
-  $.ajax({
-    method: "get",
-    async: true,
-    dataType: "json",
-    url: '/sge/sgeusers',
-    success: function(data){
-      var data = JSON.parse(data);
-      data.forEach(function(user){
-        $('#new-userlist-user').append('<option value="'+user+'">'+user+'</option>');
-      });
     }
   });
 }
@@ -165,6 +206,44 @@ $(document).ready(function(){
             }
           }
         });
+      }
+    });
+  });
+
+  $(document).on('click', '#add-sge-user', function(){
+    var user = $('#new-sge-user').val();
+    $.ajax({
+      method: "put",
+      async: true,
+      dataType: "json",
+      url: '/sge/sgeusers',
+      data: {user:user},
+      success: function(data){
+        if(data.success){
+          $('#usersets-container').html('');
+          getUsersetLists();
+        }else{
+          bootbox.alert('Error: '+JSON.stringify(data.error));
+        }
+      }
+    });
+  });
+
+  $(document).on('click', '#remove-sge-user', function(){
+    var user = $('#sge-user').val();
+    $.ajax({
+      method: "delete",
+      async: true,
+      dataType: "json",
+      url: '/sge/sgeusers',
+      data: {user:user},
+      success: function(data){
+        if(data.success){
+          $('#usersets-container').html('');
+          getUsersetLists();
+        }else{
+          bootbox.alert('Error: '+JSON.stringify(data.error));
+        }
       }
     });
   });
