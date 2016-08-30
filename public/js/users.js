@@ -16,7 +16,7 @@ var initializeUserList = function(){
 var getUsersetLists = function(){
   $.ajax({
     method: "post",
-    async: true,
+    async: false,
     dataType: "json",
     url: '/sge/sgelists',
     success: function(data){

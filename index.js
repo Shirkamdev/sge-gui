@@ -64,7 +64,6 @@ app.post('/sge/sgeusers', isLoggedIn, function(req, res) {
 app.get('/sge/sgeusers', isLoggedIn, function(req, res) {
 	cp.execFile('/usr/bin/qconf', ['-suserl'], function(err, result){
 		var users = result.split('\n').filter(function(el){return el != '';});
-    console.log(users);
 		res.json(JSON.stringify(users));
 	});
 });
